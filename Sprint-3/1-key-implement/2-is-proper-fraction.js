@@ -56,15 +56,24 @@ assertEquals(equalFraction, false);
 // Stretch:
 // What other scenarios could you test for?
 //Zero numerator
+//Input :numerator = 0, denominator = 5
+//target output : true
+//explanation: The numerator is zero, which is always less than the denominator (as long as the denominator is not zero). So, this is a proper fraction and the function returns true.
 const zeroNumerator = isProperFraction(0, 5);
 assertEquals(zeroNumerator, true);
 
 
 //negative denominator
+// Input: numerator = 2, denominator = -3
+// target output: false
+// Explanation: The denominator is negative. By mathematical convention, denominators should be positive for proper fractions. The function returns false because it checks for a positive denominator.
 const negativeDenominator = isProperFraction(2, -3);
 assertEquals(negativeDenominator, false);
 
 
 //both negative
+// Input: numerator = -2, denominator = -3
+// target output: true
+// Explanation: Both numerator and denominator are negative. The function checks if both are negative and the absolute value of the numerator is less than the absolute value of the denominator. This is considered a proper fraction, so the function returns true.
 const bothNegative = isProperFraction(-2, -3);
 assertEquals(bothNegative, true);
