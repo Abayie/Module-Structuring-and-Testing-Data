@@ -1,4 +1,4 @@
-// This problem involves playing cards: https://en.wikipedia.org/wiki/Standard_52-card_deck
+// This problem involves playing cards: https://en.wikipedia.org/wcliki/Standard_52-card_deck
 
 // You will need to implement a function getCardValue
 // the function takes a single parameter, a string representing a playing card
@@ -8,8 +8,22 @@
 // write one test at a time, and make it pass, build your solution up methodically
 // just make one change at a time -- don't rush -- programmers are deep and careful thinkers
 function getCardValue(card) {
+    // Extract rank (all characters except the last, which is the suit)
+    const rank = card.slice(0, -1);
+
+    // Handle Ace
     if (rank === "A") return 11;
+
+    // Handle Face Cards and 10
+    if (["K", "Q", "J", "10"].includes(rank)) return 10;
+
+    // Handle Number Cards (2-9)
+    if (/^[2-9]$/.test(rank)) return Number(rank);
+
+    // Invalid card rank
+    throw new Error("Invalid card rank");
 }
+
 
 // You need to write assertions for your function to check it works in different cases
 // we're going to use this helper function to make our assertions easier to read
@@ -34,11 +48,26 @@ assertEquals(aceofSpades, 11);
 // Then it should return the numeric value corresponding to the rank (e.g., "5" should return 5).
 const fiveofHearts = getCardValue("5♥");
 // ====> write your test here, and then add a line to pass the test in the function above
+assertEquals(fiveofHearts, 5);
 
 // Handle Face Cards (J, Q, K):
 // Given a card with a rank of "10," "J," "Q," or "K",
 // When the function is called with such a card,
 // Then it should return the value 10, as these cards are worth 10 points each in blackjack.
+// Face card tests
+const kingofDiamonds = getCardValue("K♦");
+assertEquals(kingofDiamonds, 10);
+
+const queenofClubs = getCardValue("Q♣");
+assertEquals(queenofClubs, 10);
+
+const jackofSpades = getCardValue("J♠");
+assertEquals(jackofSpades, 10);
+
+// 10 card test
+const tenofHearts = getCardValue("10♥");
+assertEquals(tenofHearts, 10);
+
 
 // Handle Ace (A):
 // Given a card with a rank of "A",
@@ -49,3 +78,9 @@ const fiveofHearts = getCardValue("5♥");
 // Given a card with an invalid rank (neither a number nor a recognized face card),
 // When the function is called with such a card,
 // Then it should throw an error indicating "Invalid card rank."
+// Invalid card test
+try {
+    getCardValue("1♠");
+} catch (e) {
+    assertEquals(e.message, "Invalid card rank");
+}
